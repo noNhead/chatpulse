@@ -1,0 +1,9 @@
+bin/
+obj/
+dist/
+screenshots/
+*.user
+.vs/
+.idea/
+*.binlog
+src/ChatPulse/Assets/chatpulse.ico

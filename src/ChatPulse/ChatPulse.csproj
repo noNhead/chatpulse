@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>ChatPulse</AssemblyName>
+    <RootNamespace>ChatPulse</RootNamespace>
+    <!-- The XAML compiler emits a Main of its own for App.xaml; ours handles the console modes. -->
+    <StartupObject>ChatPulse.Program</StartupObject>
+    <Version>1.0.0</Version>
+    <Product>ChatPulse</Product>
+    <Description>Realtime Twitch chat analytics</Description>
+    <!-- Drawn by the app itself during the build, so it may not exist yet on a clean tree. -->
+    <ApplicationIcon Condition="Exists('Assets\chatpulse.ico')">Assets\chatpulse.ico</ApplicationIcon>
+    <!-- Twitch chat rides on System.Net.WebSockets from the BCL: no third-party packages. -->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!-- WPF is not trim-compatible, so the whole desktop runtime ships. Compressing the bundle is
+         the only real lever: it roughly halves the file for a small one-off extraction cost. -->
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <DebugType>none</DebugType>
+    <!-- InvariantGlobalization must stay off: WPF's font-cache initialiser constructs an "en"
+         CultureInfo while laying out the first line of text, and dies in invariant mode. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+</Project>
